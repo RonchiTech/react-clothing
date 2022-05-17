@@ -1,13 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
-
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 const firebaseConfig = {
-  apiKey: 'AIzaSyDAipH-srQQR3hskeDgJ2tkLo8jP4sbWPA',
-  authDomain: 'clothing-web-app-6e493.firebaseapp.com',
-  projectId: 'clothing-web-app-6e493',
-  storageBucket: 'clothing-web-app-6e493.appspot.com',
-  messagingSenderId: '47743895154',
-  appId: '1:47743895154:web:841fcc581129f962c664eb',
+  apiKey: 'AIzaSyAxoN7lUdeAhfrqub3uCGaopIi-lYhSwiw',
+  authDomain: 'clothing-db-189b7.firebaseapp.com',
+  projectId: 'clothing-db-189b7',
+  storageBucket: 'clothing-db-189b7.appspot.com',
+  messagingSenderId: '1016118808376',
+  appId: '1:1016118808376:web:5e314a8e3a2b142101fbcd',
 };
 
 // Initialize Firebase
@@ -22,3 +22,20 @@ provider.setCustomParameters({
 export const auth = getAuth(firebaseApp);
 
 export const signInWithGooglePopUp = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, 'users', userAuth.uid);
+  const userSnapshot = await getDoc(userDocRef);
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, { displayName, email, createdAt });
+    } catch (err) {
+      console.log('Error creating user', err);
+    }
+  }
+  return userDocRef;
+};
