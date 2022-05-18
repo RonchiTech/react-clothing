@@ -14,7 +14,7 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-
+    
   &:hover {
     background-color: white;
     color: black;
@@ -24,7 +24,7 @@
   &.google-sign-in {
     background-color: #4285f4;
     color: white;
-
+    font-size: .70rem;
     &:hover {
       background-color: #357ae8;
       border: none;
