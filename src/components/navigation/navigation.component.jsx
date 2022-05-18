@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-
+import { UserContext } from '../../context/user.context';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 
 import './navigation.styles.scss';
 
 const NavBar = () => {
+  const { currentUser } = useContext(UserContext);
+  console.log('currentUser', currentUser);
   return (
     <>
       <div className="navigation">
@@ -20,9 +23,16 @@ const NavBar = () => {
           <Link className="navigation-link" to="/contact">
             Contact
           </Link>
-          <Link className="navigation-link" to="/signIn">
-            Sign In
-          </Link>
+          {currentUser && currentUser.user.email ? (
+            <Link className="navigation-link" to="/profile">
+              {currentUser.user.email}
+            </Link>
+          ) : (
+            <Link className="navigation-link" to="/signIn">
+              Sign In
+            </Link>
+          )}
+
           <Link className="navigation-link" to="/cart">
             Cart
           </Link>

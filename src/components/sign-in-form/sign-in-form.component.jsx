@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Input from '../inputs/input.components';
 import Button from '../buttons/button.component';
@@ -8,6 +8,8 @@ import {
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase.util';
+
+import { UserContext } from '../../context/user.context';
 
 import './sign-in-form.styles.scss';
 import '../sign-up-form/sign-up-form.styles.scss';
@@ -19,7 +21,7 @@ const initialInputField = {
 const SignInForm = () => {
   const [inputFields, setInputFields] = useState(initialInputField);
   const { email, password } = inputFields;
-
+  const { setCurrentUser } = useContext(UserContext);
   const resetFormField = () => {
     setInputFields(initialInputField);
   };
@@ -41,7 +43,7 @@ const SignInForm = () => {
         email,
         password
       );
-      console.log(response);
+      setCurrentUser(response);
     } catch (err) {
       switch (err.code) {
         case 'auth/wrong-password':
@@ -93,7 +95,7 @@ const SignInForm = () => {
           <Button type="submit" buttonType="inverted">
             Sign In
           </Button>
-          <Button type='button' buttonType="google" onClick={googleSignInPopUp}>
+          <Button type="button" buttonType="google" onClick={googleSignInPopUp}>
             Sign in with Google
           </Button>
         </div>
