@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
 import Input from '../inputs/input.components';
 import Button from '../buttons/button.component';
+
 import {
   createNewAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase.util';
+
+import { UserContext } from '../../context/user.context';
+
 import './sign-up-form.styles.scss';
+
 const initialInputFields = {
   displayName: '',
   email: '',
@@ -16,7 +22,9 @@ const SignUpForm = () => {
   //   const { dummyInput } = dummyValue;
   const [fields, setFields] = useState(initialInputFields);
   const { displayName, email, password, confirmPassword } = fields;
-  console.log(fields);
+
+  const { setCurrentUser } = useContext(UserContext);
+
   const onChangeHandler = (event) => {
     console.log(event);
     const { name, value } = event.target;
@@ -43,6 +51,7 @@ const SignUpForm = () => {
       });
       console.log(newUser);
       clearUserInputs();
+      setCurrentUser(newUser);
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         alert('Email is already in use');
@@ -50,9 +59,11 @@ const SignUpForm = () => {
       console.log(err);
     }
   };
+
   const clearUserInputs = () => {
     setFields(initialInputFields);
   };
+
   //   const onInputChange = (event) => {
   //     const {name, value} = event.target;
   //     console.log(name, value);

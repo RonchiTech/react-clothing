@@ -1,13 +1,20 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../../context/user.context';
+import { signOutUser } from '../../utils/firebase.util';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 
 import './navigation.styles.scss';
 
 const NavBar = () => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   console.log('currentUser', currentUser);
+  
+  const signOutHandler = async () => {
+    await signOutUser();
+    setCurrentUser(null);
+  }
+
   return (
     <>
       <div className="navigation">
@@ -23,10 +30,10 @@ const NavBar = () => {
           <Link className="navigation-link" to="/contact">
             Contact
           </Link>
-          {currentUser && currentUser.user.email ? (
-            <Link className="navigation-link" to="/profile">
-              {currentUser.user.email}
-            </Link>
+          {currentUser ? (
+            <span className="navigation-link" onClick={signOutHandler}>
+              Sign out
+            </span>
           ) : (
             <Link className="navigation-link" to="/signIn">
               Sign In
