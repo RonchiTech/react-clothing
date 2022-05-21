@@ -1,16 +1,25 @@
 import { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../../context/user.context';
+import { CartContext } from '../../context/cart.context';
 import { signOutUser } from '../../utils/firebase.util';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
-
 import './navigation.styles.scss';
 
 const NavBar = () => {
   const { currentUser } = useContext(UserContext);
-  console.log('currentUser', currentUser);
-  
+  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
 
+  console.log('currentUser', currentUser);
+
+  const onCartClickedHandler = () => {
+    console.log('clicked');
+    setIsCartOpen((prevValue) => {
+      return !prevValue;
+    });
+  };
   return (
     <>
       <div className="navigation">
@@ -36,12 +45,12 @@ const NavBar = () => {
             </Link>
           )}
 
-          <Link className="navigation-link" to="/cart">
-            Cart
-          </Link>
+          <CartIcon onClick={onCartClickedHandler} />
+
           {/* <Link className="navigation-link"> </Link>
           <Link className="navigation-link"> </Link> */}
         </div>
+        {isCartOpen && <CartDropdown />}
       </div>
       <Outlet />
     </>
