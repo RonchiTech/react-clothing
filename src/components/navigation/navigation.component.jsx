@@ -12,8 +12,6 @@ const NavBar = () => {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen, setIsCartOpen } = useContext(CartContext);
 
-  console.log('currentUser', currentUser);
-
   const onCartClickedHandler = () => {
     console.log('clicked');
     setIsCartOpen((prevValue) => {
