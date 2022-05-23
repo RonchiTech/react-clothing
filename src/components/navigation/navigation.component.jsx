@@ -6,7 +6,11 @@ import { signOutUser } from '../../utils/firebase.util';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
-import './navigation.styles.scss';
+import {
+  Navigation,
+  NavigationLink,
+  NavigationLinksContainer,
+} from './navigation.styles';
 
 const NavBar = () => {
   const { currentUser } = useContext(UserContext);
@@ -20,23 +24,19 @@ const NavBar = () => {
   };
   return (
     <>
-      <div className="navigation">
+      <Navigation>
         <div className="navigation-logo-container">
-          <Link className="navigation-link" to="/">
+          <NavigationLink to="/">
             <Logo className="logo" />
-          </Link>
+          </NavigationLink>
         </div>
-        <div className="navigation-links-container">
-          <Link className="navigation-link" to="/shop">
-            Shop
-          </Link>
-          <Link className="navigation-link" to="/contact">
-            Contact
-          </Link>
+        <NavigationLinksContainer>
+          <NavigationLink to="/shop">Shop</NavigationLink>
+          <NavigationLink to="/contact">Contact</NavigationLink>
           {currentUser ? (
-            <span className="navigation-link" onClick={signOutUser}>
+            <NavigationLink as={'span'} onClick={signOutUser}>
               Sign out
-            </span>
+            </NavigationLink>
           ) : (
             <Link className="navigation-link" to="/signIn">
               Sign In
@@ -47,9 +47,9 @@ const NavBar = () => {
 
           {/* <Link className="navigation-link"> </Link>
           <Link className="navigation-link"> </Link> */}
-        </div>
+        </NavigationLinksContainer>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </Navigation>
       <Outlet />
     </>
   );
