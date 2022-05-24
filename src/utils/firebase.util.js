@@ -67,9 +67,7 @@ export const getCollectionAndDocuments = async () => {
 
   const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
     const { title, items } = docSnapshot.data();
-    // console.log('items', title, items);
     acc[title.toLowerCase()] = items;
-    // console.log('acc', acc);
     return acc;
   }, {});
 
@@ -95,7 +93,7 @@ export const createUserDocumentFromAuth = async (
         ...userInformation,
       });
     } catch (err) {
-      console.log('Error creating user', err);
+      alert('Error creating user', err);
     }
   }
   return userDocRef;

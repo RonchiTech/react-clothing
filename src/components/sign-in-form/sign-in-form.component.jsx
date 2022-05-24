@@ -50,9 +50,9 @@ const SignInForm = () => {
           alert('Email not found');
           break;
         default:
-          console.log(err);
+          alert(err);
       }
-      console.log(err);
+  
 
       //Check if email exists and if password is correct...
     }
@@ -61,7 +61,7 @@ const SignInForm = () => {
     try {
       await signInWithGooglePopUp();
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
   return (

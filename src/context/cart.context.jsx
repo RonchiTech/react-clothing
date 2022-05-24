@@ -19,10 +19,8 @@ const addCartItem = (cartItems, productToAdd) => {
 const removeCartItem = (cartItems, cartToRemove) => {
   //find the cart item
   const existingCartItem = cartItems.find((cartItem) => {
-    console.log(cartItem);
     return cartItem.id === cartToRemove.id;
   });
-  console.log(existingCartItem);
   //check if the quantity is 1 then remove it
   if (existingCartItem.quantity === 1) {
     return cartItems.filter((cartItem) => cartItem.id !== cartToRemove.id);

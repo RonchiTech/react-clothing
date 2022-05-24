@@ -8,7 +8,6 @@ import {
   createUserDocumentFromAuth,
 } from '../../utils/firebase.util';
 
-
 import './sign-up-form.styles.scss';
 
 const initialInputFields = {
@@ -23,7 +22,6 @@ const SignUpForm = () => {
   const { displayName, email, password, confirmPassword } = fields;
 
   const onChangeHandler = (event) => {
-    console.log(event);
     const { name, value } = event.target;
     setFields({ ...fields, [name]: value });
   };
@@ -43,17 +41,14 @@ const SignUpForm = () => {
         email,
         password
       );
-      const newUser = await createUserDocumentFromAuth(user, {
+      await createUserDocumentFromAuth(user, {
         displayName: displayName,
       });
-      console.log(newUser);
       clearUserInputs();
-
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         alert('Email is already in use');
       }
-      console.log(err);
     }
   };
 

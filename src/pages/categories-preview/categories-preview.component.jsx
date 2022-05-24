@@ -6,8 +6,6 @@ const CategoriesPreview = () => {
   return (
     <div className="shop-container">
       {Object.keys(categoriesMap).map((title) => {
-        // console.log('title', title);
-        // console.log('categoriesMap[title]', categoriesMap[title]);
         const products = categoriesMap[title];
         return (
           <CategoryPreview key={title} title={title} products={products} />
