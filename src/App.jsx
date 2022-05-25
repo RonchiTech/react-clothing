@@ -9,6 +9,7 @@ import Checkout from './pages/checkout/checkout.component';
 // import './categories.styles.scss';
 
 const App = () => {
+  console.log('APP FILE');
   return (
     <Routes>
       <Route path="/" element={<NavBar />}>
