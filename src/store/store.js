@@ -3,5 +3,5 @@ import logger from 'redux-logger';
 
 import { rootReducer } from './rootReducer';
 
-// const store = createStore 
+const store = createStore(rootReducer, logger, )
 
